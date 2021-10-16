@@ -90,9 +90,8 @@ public class ClientPhase : TurnPhase {
 	public override void Init() {
 		base.Init();
 		clients = machine.pendingClients;
-		clientsPhaseManager.enabled = true;
-		clientsPhaseManager.clients = clients;
-		clientsPhaseManager.Init();
+		clientsPhaseManager.gameObject.SetActive(true);
+		clientsPhaseManager.Init(clients);
 		
 	}
 }

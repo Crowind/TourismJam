@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DesignPatterns;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 
@@ -10,19 +13,44 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 	public SpriteRenderer clientSprite;
 	public SpriteRenderer balloonSprite;
 	public TextMeshPro balloonText;
+
+	public Button flyersButton;
+	public FlyersOutline flyersOutline;
 	
-	public List<Client> clients;
+	
+	private Queue<Client> clients = new Queue<Client>();
+	public Client currentClient;
 
 	public event Action EndClientsPhase;
-	
-	
-	
-	public void Init() {
-		//TODO all
+
+	protected override void Awake() {
+		base.Awake();
+
+		var clientArrives = new ClientArrives(this);
+		var clientInteraction = new ClientInteraction(this);
+		possibleStates.Add(typeof(ClientArrives),clientArrives);
+		possibleStates.Add(typeof(ClientInteraction),clientInteraction);
+
+		flyersButton.interactable = false;
+		flyersOutline.Stop();
 		
-		Debug.Log("Clients");
+		state = null;
+
+	}
+
+	public void Init(List<Client> newClients) {
+
+		clients.Clear();
+		foreach (Client newClient in newClients) {
+			
+			clients.Enqueue(newClient);
+		}
+
+		currentClient = clients.Dequeue();
 		
-		EndClientsPhase?.Invoke();
+		ChangeState(typeof(ClientArrives));
+		//EndClientsPhase?.Invoke();
+		
 	}
 }
 
@@ -32,7 +60,7 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 
 public class ClientPhaseState : State<ClientsPhaseManager> {
 
-	public ClientPhaseState(ClientsPhaseManager machine) : base(machine) { }
+	protected ClientPhaseState(ClientsPhaseManager machine) : base(machine) { }
 
 	public override void HandleInput() {
 	}
@@ -45,32 +73,67 @@ public class ClientPhaseState : State<ClientsPhaseManager> {
 
 	public override void Init() {
 	}
-
-	public virtual void GetInput() { }
+	
 }
 
 
 public class ClientArrives : ClientPhaseState {
 
-	private SpriteRenderer clientSprite;
-	private SpriteRenderer balloonSprite;
-	private TextMeshPro balloonText;
 
 
-	public ClientArrives(ClientsPhaseManager machine, TextMeshPro balloonText, SpriteRenderer balloonSprite, SpriteRenderer clientSprite) : base(machine) {
-		this.balloonText = balloonText;
-		this.balloonSprite = balloonSprite;
-		this.clientSprite = clientSprite;
+
+	public ClientArrives(ClientsPhaseManager machine) : base(machine) {
 
 	}
 
 	public override void Init() {
 		base.Init();
 		
-		balloonSprite.color= Color.clear;
-		clientSprite.color = Color.clear;
+		machine.balloonSprite.color= Color.clear;
+		machine.clientSprite.color = Color.clear;
+		machine.clientSprite.sprite = machine.currentClient.sprite;
 		
+		machine.balloonText.text = "";
+		
+		machine.clientSprite.DOColor(Color.white, 1.5f).OnComplete(() => {
+			
+			machine.balloonSprite.color = Color.white;
+			machine.StartCoroutine(TypeWriterCoroutine(machine.currentClient.dialogue1,0.06f));
+
+		});
 
 	}
 
+	private IEnumerator TypeWriterCoroutine(string textToWrite, float period) {
+
+		float timePassed=0;
+
+		foreach (char c in textToWrite) {
+			while (timePassed < period) {
+				timePassed += Time.deltaTime;
+				yield return null;
+			}
+			
+			timePassed = 0;
+			machine.balloonText.text += c;
+
+		}
+		machine.ChangeState(typeof(ClientInteraction));
+	}
+
+}
+
+
+public class ClientInteraction : ClientPhaseState {
+	public ClientInteraction(ClientsPhaseManager machine) : base(machine) {
+		
+	}
+
+	public override void Init() {
+		base.Init();
+		machine.flyersButton.interactable = true;
+		machine.flyersOutline.Go();
+
+
+	}
 }
