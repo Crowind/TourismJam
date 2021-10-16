@@ -5178,19 +5178,47 @@ MonoBehaviour:
   days:
   - clients:
     - sprite: {fileID: 0}
-      dialogue1: caspiuhfpaisuhbn
-      likeDialogue: 
-      preferredTripLenght: 2
-      favouriteTags: 02000000
+      dialogue1: I am looking for a walk surrounded by nature towards a cultural
+        goal ... all in one day please.
+      likeDialogue: Pleasant walk and a beautiful place of culture.
+      preferredTripLenght: 1
+      favouriteTags: 0300000006000000
+      hatedTags: 
+  - clients:
+    - sprite: {fileID: 0}
+      dialogue1: I have no time to waste, I just want to take a walk in mountains.
+      likeDialogue: I am satisfied. I'll come back!
+      preferredTripLenght: 1
+      favouriteTags: 05000000
+      hatedTags: 00000000
+    - sprite: {fileID: 0}
+      dialogue1: My girlfriend and I want a long vacation full of romance, culture
+        and immerse ourselves in nature.
+      likeDialogue: An unforgettable love escape.
+      preferredTripLenght: 3
+      favouriteTags: 020000000300000006000000
+      hatedTags: 
+  - clients:
+    - sprite: {fileID: 0}
+      dialogue1: I would like to have a day of water sports.
+      likeDialogue: I am the king of the seven seas!
+      preferredTripLenght: 1
+      favouriteTags: 0000000004000000
       hatedTags: 
     - sprite: {fileID: 0}
-      dialogue1: cvasfadfa
-      likeDialogue: 
-      preferredTripLenght: 0
-      favouriteTags: 0500000003000000
+      dialogue1: I have a couple of days where I would like to relax by the sea and
+        see some cultural places.
+      likeDialogue: A regenerating holiday!
+      preferredTripLenght: 2
+      favouriteTags: 040000000100000003000000
       hatedTags: 
-  - clients: []
-  - clients: []
+    - sprite: {fileID: 0}
+      dialogue1: Nature, Mountains, Sea.. Life is one, I have time and I want everything!
+        Zero relax!
+      likeDialogue: Nature, Mountains, Sea ... all in one region! Awesome!
+      preferredTripLenght: 3
+      favouriteTags: 040000000600000005000000
+      hatedTags: 01000000
   day: 0
 --- !u!4 &1112580484
 Transform:
