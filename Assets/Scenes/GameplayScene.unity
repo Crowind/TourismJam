@@ -5177,7 +5177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   days:
   - clients:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 6611fd5bb93e1014280725637fb2931c, type: 3}
       dialogue1: I am looking for a walk surrounded by nature towards a cultural
         goal ... all in one day please.
       likeDialogue: Pleasant walk and a beautiful place of culture.
@@ -5185,13 +5185,13 @@ MonoBehaviour:
       favouriteTags: 0300000006000000
       hatedTags: 
   - clients:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: e64711221cd2eb54ab13cdb45ec48a70, type: 3}
       dialogue1: I have no time to waste, I just want to take a walk in mountains.
       likeDialogue: I am satisfied. I'll come back!
       preferredTripLenght: 1
       favouriteTags: 05000000
       hatedTags: 00000000
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 6901264b59a36ed4aba2735d800f0a44, type: 3}
       dialogue1: My girlfriend and I want a long vacation full of romance, culture
         and immerse ourselves in nature.
       likeDialogue: An unforgettable love escape.
@@ -5199,20 +5199,20 @@ MonoBehaviour:
       favouriteTags: 020000000300000006000000
       hatedTags: 
   - clients:
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: f64f5bd7247ff594abd6bcb8b9510e6f, type: 3}
       dialogue1: I would like to have a day of water sports.
       likeDialogue: I am the king of the seven seas!
       preferredTripLenght: 1
       favouriteTags: 0000000004000000
       hatedTags: 
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 329c95ebcbe43d648ac2768be1469072, type: 3}
       dialogue1: I have a couple of days where I would like to relax by the sea and
         see some cultural places.
       likeDialogue: A regenerating holiday!
       preferredTripLenght: 2
       favouriteTags: 040000000100000003000000
       hatedTags: 
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300000, guid: 83687f36c8caa3942b74fe5171d5ef6e, type: 3}
       dialogue1: Nature, Mountains, Sea.. Life is one, I have time and I want everything!
         Zero relax!
       likeDialogue: Nature, Mountains, Sea ... all in one region! Awesome!
