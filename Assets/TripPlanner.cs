@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class TripPlanner : MonoBehaviour {
 
-
+	public ClientsPhaseManager clientsPhaseManager;
+	
 	public List<PreviewVisualizer> previewVisualizers;
 
 	public Button confirmButton;
@@ -16,12 +17,16 @@ public class TripPlanner : MonoBehaviour {
 	public Image recapImage3;
 	
 	
-	private List<Destination> destinations = new List<Destination>(3);
+	private List<Destination> destinations = new List<Destination>();
 
 	private void Awake() {
 		
 		confirmButton.interactable = false;
 		gameObject.SetActive(false);
+		recapImage1.gameObject.SetActive(false);
+		recapImage2.gameObject.SetActive(false);
+		recapImage3.gameObject.SetActive(false);
+
 	}
 
 	public void AddDestination(Destination destination) {
@@ -31,28 +36,29 @@ public class TripPlanner : MonoBehaviour {
 		}
 		destinations.Add(destination);
 
-		previewVisualizers.Find(visualizer => visualizer.destination = destination)?.Lock();
+		PreviewVisualizer find = previewVisualizers.Find(visualizer => visualizer.destination == destination);
+		find.Lock(true);
 		
 		if (destinations.Count == 3) {
 
 			foreach (PreviewVisualizer previewVisualizer in previewVisualizers) {
 
-				previewVisualizer.Lock();
+				previewVisualizer.Lock(false);
 			}
 		}
 		UpdatePreviewTrip();
 	}
 
 	public void RemoveDestination(int index) {
-		if (previewVisualizers.Count == 3) {
+		if (destinations.Count == 3) {
 			foreach (PreviewVisualizer previewVisualizer in previewVisualizers) {
 
-				previewVisualizer.Unlock();
+				previewVisualizer.Unlock(false);
 			}
 		}
 		Destination destination = destinations[index];
 
-		previewVisualizers.Find(visualizer => visualizer.destination = destination)?.Unlock();
+		previewVisualizers.Find(visualizer => visualizer.destination == destination)?.Unlock(true);
 		
 		destinations.RemoveAt(index);
 		
@@ -66,19 +72,23 @@ public class TripPlanner : MonoBehaviour {
 		confirmButton.interactable = destinations.Count > 0;
 		
 		recapImage1.sprite = destinations.Count > 0 ? destinations[0].preview : null;
+		recapImage1.gameObject.SetActive( destinations.Count > 0);
 		recapImage1.color = destinations.Count > 0 ? Color.white : Color.clear;
 		
 		recapImage2.sprite = destinations.Count > 1 ? destinations[1].preview : null;
+		recapImage2.gameObject.SetActive( destinations.Count > 1);
 		recapImage2.color = destinations.Count > 1 ? Color.white : Color.clear;
 
 		recapImage3.sprite = destinations.Count > 2 ? destinations[2].preview : null;
+		recapImage3.gameObject.SetActive( destinations.Count > 2);
 		recapImage3.color = destinations.Count > 2 ? Color.white : Color.clear;
 
 	}
 
 	public void ConfirmPlan() {
-		
-		//TODO
+
+		GameController.instance.GenerateReview(clientsPhaseManager.currentClient,destinations);
+		clientsPhaseManager.nextSubPhase = true;
 	}
 
 }

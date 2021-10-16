@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,13 @@ public class PreviewVisualizer : MonoBehaviour {
 	public Button openDetails;
 
 	public DetailsScreen detailsScreen;
+	public Image preview;
+	public bool added;
+	public TextMeshProUGUI capacity;
 	
 	private void Awake() {
-	
+
+		preview.sprite = destination.preview;
 		openDetails.onClick.AddListener(() => {
 
 			detailsScreen.Init(destination);
@@ -20,14 +25,18 @@ public class PreviewVisualizer : MonoBehaviour {
 		
 	}
 
-	public void Lock() {
+	public void Lock(bool isBeingAdded) {//TODO Capacity
 
 		openDetails.interactable = false;
 
+		added |= isBeingAdded;
+
 	}
 
-	public void Unlock() {
+	public void Unlock(bool isBeingRemoved) {
 
-		openDetails.interactable = destination.capacity > 0;
+		added &= !isBeingRemoved;
+		
+		openDetails.interactable = destination.capacity > 0 && !added;
 	}
 }

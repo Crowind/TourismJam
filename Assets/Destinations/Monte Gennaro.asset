@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b596e43a714c8792fa61a4f13464ea, type: 3}
   m_Name: Monte Gennaro
   m_EditorClassIdentifier: 
-  preview: {fileID: 0}
+  preview: {fileID: 21300000, guid: 00d1e9618289d654eb5261cd5f08a80e, type: 3}
   photo: {fileID: 21300000, guid: 00d1e9618289d654eb5261cd5f08a80e, type: 3}
   description: wsfssj
   capacity: 4

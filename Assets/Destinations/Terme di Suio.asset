@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b596e43a714c8792fa61a4f13464ea, type: 3}
   m_Name: Terme di Suio
   m_EditorClassIdentifier: 
-  preview: {fileID: 0}
+  preview: {fileID: 21300000, guid: e7644532efd99344c8a9ce5951753af7, type: 3}
   photo: {fileID: 21300000, guid: e7644532efd99344c8a9ce5951753af7, type: 3}
   description: wsfssj
   capacity: 4

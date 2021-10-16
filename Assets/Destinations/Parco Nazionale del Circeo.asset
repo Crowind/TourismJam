@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b596e43a714c8792fa61a4f13464ea, type: 3}
   m_Name: Parco Nazionale del Circeo
   m_EditorClassIdentifier: 
-  preview: {fileID: 0}
-  photo: {fileID: 0}
+  preview: {fileID: 21300000, guid: 30edcb3052e0434449db6831f9414d2f, type: 3}
+  photo: {fileID: 21300000, guid: 30edcb3052e0434449db6831f9414d2f, type: 3}
   description: wsfssj
   capacity: 4
   locationTags: 06000000

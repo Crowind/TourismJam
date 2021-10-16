@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DesignPatterns;
 using UnityEngine;
@@ -24,7 +25,12 @@ public class TurnManager : StateMachine<TurnManager> {
 		possibleStates.Add(typeof(ClientPhase),clientPhaseState);
 		possibleStates.Add(typeof(DayChangePhase), dayEndState);
 
-		ChangeState(typeof(ReviewsPhase));
+		ChangeState(typeof(ClientPhase));
+	}
+
+	private void Start() {
+
+		pendingClients = GameController.instance.GetCurrentDayClients();
 	}
 
 }
@@ -125,10 +131,26 @@ public class Client {
 
 	public Sprite sprite;
 	public string dialogue1;
+	public string likeDialogue;
+
+	public TripLenght preferredTripLenght;
+	public List<LocationTag> favouriteTags;
+	public List<LocationTag> hatedTags;
+}
+
+public enum TripLenght {
+	Breve=1,
+	Medio=2,
+	Lungo=3
 }
 
 [System.Serializable]
 public class Review {
 	public string text;
 	public bool like;
+
+	public Review(bool like, string text) {
+		this.like = like;
+		this.text = text;
+	}
 }

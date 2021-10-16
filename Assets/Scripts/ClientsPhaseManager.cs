@@ -16,7 +16,11 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 
 	public Button flyersButton;
 	public FlyersOutline flyersOutline;
-	
+
+	public DetailsScreen detailsScreen;
+	public TripPlanner tripPlanner;
+
+	public bool nextSubPhase;
 	
 	private Queue<Client> clients = new Queue<Client>();
 	public Client currentClient;
@@ -28,14 +32,18 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 
 		var clientArrives = new ClientArrives(this);
 		var clientInteraction = new ClientInteraction(this);
+		var delivery = new Delivery(this);
 		possibleStates.Add(typeof(ClientArrives),clientArrives);
 		possibleStates.Add(typeof(ClientInteraction),clientInteraction);
+		possibleStates.Add(typeof(Delivery),delivery);
 
 		flyersButton.interactable = false;
 		flyersOutline.Stop();
 		
 		state = null;
 
+		gameObject.SetActive(false);
+		
 	}
 
 	public void Init(List<Client> newClients) {
@@ -52,6 +60,7 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 		//EndClientsPhase?.Invoke();
 		
 	}
+
 }
 
 
@@ -73,7 +82,6 @@ public class ClientPhaseState : State<ClientsPhaseManager> {
 
 	public override void Init() {
 	}
-	
 }
 
 
@@ -101,7 +109,7 @@ public class ClientArrives : ClientPhaseState {
 			machine.StartCoroutine(TypeWriterCoroutine(machine.currentClient.dialogue1,0.06f));
 
 		});
-
+		
 	}
 
 	private IEnumerator TypeWriterCoroutine(string textToWrite, float period) {
@@ -133,7 +141,43 @@ public class ClientInteraction : ClientPhaseState {
 		base.Init();
 		machine.flyersButton.interactable = true;
 		machine.flyersOutline.Go();
+		
+	}
 
+	public override void HandleInput() {
+		if (machine.nextSubPhase == true) {
 
+			machine.nextSubPhase = false;
+			machine.tripPlanner.gameObject.SetActive(false);
+			machine.balloonSprite.gameObject.SetActive(false);
+			machine.balloonText.gameObject.SetActive(false);
+			machine.detailsScreen.gameObject.SetActive(false);
+		
+			machine.ChangeState(typeof(Delivery));
+		}
+	}
+}
+
+public class Delivery : ClientPhaseState {
+	public Delivery(ClientsPhaseManager machine) : base(machine) {
+		
+	}
+
+	public override void Init() {
+		base.Init();
+		machine.flyersButton.interactable = true;
+		machine.flyersOutline.Go();
+		
+	}
+
+	public override void HandleInput() {
+		if (machine.nextSubPhase == true) {
+
+			machine.nextSubPhase = false;
+			
+			
+			
+			
+		}
 	}
 }
