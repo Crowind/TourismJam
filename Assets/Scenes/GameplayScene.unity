@@ -5479,7 +5479,7 @@ MonoBehaviour:
       likeDialogue: I am satisfied. I'll come back!
       preferredTripLenght: 1
       favouriteTags: 05000000
-      hatedTags: 00000000
+      hatedTags: 
     - sprite: {fileID: 21300000, guid: 6901264b59a36ed4aba2735d800f0a44, type: 3}
       dialogue1: My girlfriend and I want a long vacation full of romance, culture
         and immerse ourselves in nature.
