@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preview: {fileID: 21300000, guid: 723fd86f8a49e464c9a364620669cb2a, type: 3}
   photo: {fileID: 21300000, guid: 723fd86f8a49e464c9a364620669cb2a, type: 3}
-  description: wsfssj
+  description: Not far from Subiaco, it's perfect for a quiet stroll but thanks to
+    its 6 slopes it is also the ideal place for those who want to take their first
+    steps on skis or for winter hiking and snowshoeing.
   capacity: 4
-  locationTags: 05000000
+  locationTags: 0500000000000000

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preview: {fileID: 21300000, guid: 30edcb3052e0434449db6831f9414d2f, type: 3}
   photo: {fileID: 21300000, guid: 30edcb3052e0434449db6831f9414d2f, type: 3}
-  description: wsfssj
+  description: Circeo National Park is vast and diverse territory with a lot to offer,
+    in particular for nature lovers.
   capacity: 4
   locationTags: 06000000

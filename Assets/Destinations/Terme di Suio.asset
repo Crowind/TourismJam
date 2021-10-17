@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preview: {fileID: 21300000, guid: e7644532efd99344c8a9ce5951753af7, type: 3}
   photo: {fileID: 21300000, guid: e7644532efd99344c8a9ce5951753af7, type: 3}
-  description: wsfssj
+  description: Terme di Suio are the thermal pools with water games, waterfalls and
+    gargoyles set in a beautiful and romantic environment ensuring total relaxation.
   capacity: 4
   locationTags: 0100000002000000

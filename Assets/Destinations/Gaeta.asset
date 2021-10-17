@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preview: {fileID: 21300000, guid: f085e1c5ea7fee84b837dc440348ff85, type: 3}
   photo: {fileID: 21300000, guid: f085e1c5ea7fee84b837dc440348ff85, type: 3}
-  description: wsfssj
+  description: A Maritime Republic and holiday destination full of experts willing
+    to offer you a day of kitesurfing, flyboarding, and other fantastic water sports.
   capacity: 4
   locationTags: 0000000004000000
