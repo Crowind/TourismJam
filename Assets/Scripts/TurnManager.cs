@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using DesignPatterns;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnManager : StateMachine<TurnManager> {
 
 	public int currentDay;
 	
 	public List<Review> pendingReviews;
-	public List<Client> pendingClients;
 	
 	public ReviewsPhaseManager reviewsPhaseManager;
 	public ClientsPhaseManager clientsPhaseManager;
@@ -28,10 +28,7 @@ public class TurnManager : StateMachine<TurnManager> {
 		ChangeState(typeof(ClientPhase));
 	}
 
-	private void Start() {
 
-		pendingClients = GameController.instance.GetCurrentDayClients();
-	}
 
 }
 
@@ -60,6 +57,10 @@ public class ReviewsPhase : TurnPhase {
 	public ReviewsPhase(TurnManager machine, ReviewsPhaseManager reviewsPhaseManager) : base(machine) {
 		this.reviewsPhaseManager = reviewsPhaseManager;
 		reviewsPhaseManager.EndReviewsPhase += () => {
+			
+			if (GameController.instance.day==GameController.instance.days.Count) {
+				SceneManager.LoadScene(1);
+			}
 			machine.ChangeState(typeof(ClientPhase));
 		};
 	}
@@ -95,7 +96,7 @@ public class ClientPhase : TurnPhase {
 
 	public override void Init() {
 		base.Init();
-		clients = machine.pendingClients;
+		clients = GameController.instance.GetCurrentDayClients();;
 		clientsPhaseManager.gameObject.SetActive(true);
 		clientsPhaseManager.Init(clients);
 		

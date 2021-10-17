@@ -1,13 +1,23 @@
 using System;
 using System.Collections.Generic;
 using DesignPatterns;
+using UnityEditor.SearchService;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : Singleton<GameController> {
 
 	
 	public List<Day> days;
-	
+	public TurnManager turnManager;
 	public int day = 0;
+	public int goodReviews;
+	public int badReviews;
+
+	protected override void Awake() {
+		base.Awake();
+		DontDestroyOnLoad(gameObject);
+	}
 
 	public List<Client> GetCurrentDayClients() {
 
@@ -15,12 +25,14 @@ public class GameController : Singleton<GameController> {
 
 	}
 
+	public void ChangeDay() {
+		turnManager.pendingReviews = days[day].reviews;
+		day++;
+	}
+
 	public void GenerateReview(Client currentClient, List<Destination> destinations) { 
 		days[day].reviews.Add(Like(currentClient,destinations) );
-		
 	}
-	
-	
 
 	private static Review Like(Client client, List<Destination> destinations ) {
 
@@ -45,12 +57,12 @@ public class GameController : Singleton<GameController> {
 			}
 
 		}
-		foreach (LocationTag clientFavouriteTag in client.favouriteTags) {
+		foreach (LocationTag clientHatedTag in client.hatedTags) {
 
-			bool exists = destinations.Exists(destination => destination.locationTags.Contains(clientFavouriteTag));
+			bool exists = destinations.Exists(destination => destination.locationTags.Contains(clientHatedTag));
 			like &= !exists;
 			if (exists) {
-				comment = PresentTagToComment(clientFavouriteTag);
+				comment = PresentTagToComment(clientHatedTag);
 			}
 
 		}
@@ -95,6 +107,7 @@ public class GameController : Singleton<GameController> {
 		};
 
 	}
+
 }
 
 
@@ -102,6 +115,10 @@ public class GameController : Singleton<GameController> {
 public class Day {
 
 	public List<Client> clients;
-	[NonSerialized]
+	
+	[HideInInspector]
 	public List<Review> reviews = new List<Review>();
+	
+	[HideInInspector]
+	public Dictionary<Destination , int> destinations = new Dictionary<Destination, int>();
 }

@@ -37,7 +37,7 @@ public class ReviewsPhaseManager:MonoBehaviour {
 	}
 
 	public void EndPhaseButton() {
-		Collect();
+
 		FadeOut();
 		
 	}
@@ -78,13 +78,17 @@ public class ReviewsPhaseManager:MonoBehaviour {
 			reviewVisualizer.SetText(review.text);
 			reviewVisualizer.SetScore(review.like);
 
+			if (review.like) {
+				GameController.instance.goodReviews++;
+			}
+			else {
+				GameController.instance.badReviews++;
+			}
+
+
 		}
 	}
 
-	private void Collect() {
-		//TODO Implement
-		Debug.Log("Collecting");
-	}
 
 	
 }

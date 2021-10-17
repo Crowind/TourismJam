@@ -8,7 +8,8 @@ public class ReviewVisualizer : MonoBehaviour {
     
     public TextMeshProUGUI text;
     public Image background;
-    public Image likeImage;
+    public Sprite likeSprite;
+    public Sprite dislikeSprite;
     
     public void SetText(string message) {
         text.text = message;
@@ -16,8 +17,7 @@ public class ReviewVisualizer : MonoBehaviour {
 
     public void SetScore(bool like) {
 
-        likeImage.enabled = like;
-        background.color = like ? Color.green : Color.red;
+        background.sprite = like ? likeSprite : dislikeSprite;
 
     }
 }

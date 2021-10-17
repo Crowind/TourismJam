@@ -12,11 +12,13 @@ public class DayChangePhaseManager : MonoBehaviour {
 	public event Action DayChangeDone;
 
 	public void ChangeDay(int dayEnded) {
-		//TODO
+
+		GameController.instance.ChangeDay();
+		
 		
 		background.color = Color.clear;
 
-		text.text = "Day " + dayEnded++;
+		text.text = "Day " + ++dayEnded;
 		text.color = Color.clear;
 
 		background.DOColor(new Color(0, 0, 0, 0.5f), 4f).SetEase(Ease.OutQuart).OnComplete(
@@ -30,7 +32,7 @@ public class DayChangePhaseManager : MonoBehaviour {
 
 		text.DOColor(Color.white, 2.5f).OnComplete(() => {
 			text.DOColor(Color.clear, 1.5f).OnComplete(() => {
-				text.text = "Day " + dayEnded;
+				text.text = "Day " + ++dayEnded;
 				text.DOColor(Color.white, 1.5f).OnComplete(() => {
 					text.DOColor(Color.clear, 2.5f);
 				});

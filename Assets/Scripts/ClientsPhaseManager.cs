@@ -24,18 +24,21 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 	
 	private Queue<Client> clients = new Queue<Client>();
 	public Client currentClient;
+	private AudioSource audiosource;
 
 	public event Action EndClientsPhase;
 
 	protected override void Awake() {
 		base.Awake();
+		
+		audiosource = GetComponent<AudioSource>();
 
 		var clientArrives = new ClientArrives(this);
 		var clientInteraction = new ClientInteraction(this);
-		var delivery = new Delivery(this);
+		var clientLeaves = new ClientLeaves(this);
 		possibleStates.Add(typeof(ClientArrives),clientArrives);
 		possibleStates.Add(typeof(ClientInteraction),clientInteraction);
-		possibleStates.Add(typeof(Delivery),delivery);
+		possibleStates.Add(typeof(ClientLeaves),clientLeaves);
 
 		flyersButton.interactable = false;
 		flyersOutline.Stop();
@@ -53,14 +56,29 @@ public class ClientsPhaseManager : StateMachine<ClientsPhaseManager> {
 			
 			clients.Enqueue(newClient);
 		}
-
+		
 		currentClient = clients.Dequeue();
 		
 		ChangeState(typeof(ClientArrives));
-		//EndClientsPhase?.Invoke();
 		
 	}
 
+	public void End() {
+
+		if (clients.Count > 0) {
+			
+			currentClient = clients.Dequeue();
+			
+			ChangeState(typeof(ClientArrives));
+		}
+		else {
+			EndClientsPhase?.Invoke();
+		}
+	}
+
+	public void PlayHello() {
+		audiosource.Play();
+	}
 }
 
 
@@ -86,10 +104,7 @@ public class ClientPhaseState : State<ClientsPhaseManager> {
 
 
 public class ClientArrives : ClientPhaseState {
-
-
-
-
+	
 	public ClientArrives(ClientsPhaseManager machine) : base(machine) {
 
 	}
@@ -97,14 +112,19 @@ public class ClientArrives : ClientPhaseState {
 	public override void Init() {
 		base.Init();
 		
+		machine.tripPlanner.Init();
 		machine.balloonSprite.color= Color.clear;
 		machine.clientSprite.color = Color.clear;
 		machine.clientSprite.sprite = machine.currentClient.sprite;
 		
+		
 		machine.balloonText.text = "";
 		
 		machine.clientSprite.DOColor(Color.white, 1.5f).OnComplete(() => {
-			
+
+			machine.PlayHello();
+			machine.balloonText.gameObject.SetActive(true);
+			machine.balloonSprite.gameObject.SetActive(true);
 			machine.balloonSprite.color = Color.white;
 			machine.StartCoroutine(TypeWriterCoroutine(machine.currentClient.dialogue1,0.06f));
 
@@ -131,7 +151,6 @@ public class ClientArrives : ClientPhaseState {
 
 }
 
-
 public class ClientInteraction : ClientPhaseState {
 	public ClientInteraction(ClientsPhaseManager machine) : base(machine) {
 		
@@ -141,6 +160,7 @@ public class ClientInteraction : ClientPhaseState {
 		base.Init();
 		machine.flyersButton.interactable = true;
 		machine.flyersOutline.Go();
+		
 		
 	}
 
@@ -153,31 +173,33 @@ public class ClientInteraction : ClientPhaseState {
 			machine.balloonText.gameObject.SetActive(false);
 			machine.detailsScreen.gameObject.SetActive(false);
 		
-			machine.ChangeState(typeof(Delivery));
+			machine.ChangeState(typeof(ClientLeaves));
 		}
 	}
 }
 
-public class Delivery : ClientPhaseState {
-	public Delivery(ClientsPhaseManager machine) : base(machine) {
-		
+public class ClientLeaves : ClientPhaseState {
+
+
+
+
+	public ClientLeaves(ClientsPhaseManager machine) : base(machine) {
+
 	}
 
 	public override void Init() {
 		base.Init();
-		machine.flyersButton.interactable = true;
-		machine.flyersOutline.Go();
+		machine.flyersButton.interactable = false;
+		
+		machine.clientSprite.DOColor(Color.clear, 2.5f).OnComplete(() => {
+			
+			machine.balloonSprite.color = Color.white;
+			machine.End();
+			
+
+		});
 		
 	}
 
-	public override void HandleInput() {
-		if (machine.nextSubPhase == true) {
-
-			machine.nextSubPhase = false;
-			
-			
-			
-			
-		}
-	}
 }
+

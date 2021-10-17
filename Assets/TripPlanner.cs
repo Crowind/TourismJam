@@ -17,17 +17,27 @@ public class TripPlanner : MonoBehaviour {
 	public Image recapImage3;
 	
 	
-	private List<Destination> destinations = new List<Destination>();
+	private List<Destination> destinations=new List<Destination>();
 
-	private void Awake() {
+
+	public void Init() {
+		
+		destinations.Clear();
+		
+		foreach (PreviewVisualizer previewVisualizer in previewVisualizers) {
+			
+			previewVisualizer.Init();
+		}
 		
 		confirmButton.interactable = false;
 		gameObject.SetActive(false);
 		recapImage1.gameObject.SetActive(false);
 		recapImage2.gameObject.SetActive(false);
 		recapImage3.gameObject.SetActive(false);
-
+		
+		UpdatePreviewTrip();
 	}
+
 
 	public void AddDestination(Destination destination) {
 
@@ -88,6 +98,7 @@ public class TripPlanner : MonoBehaviour {
 	public void ConfirmPlan() {
 
 		GameController.instance.GenerateReview(clientsPhaseManager.currentClient,destinations);
+		
 		clientsPhaseManager.nextSubPhase = true;
 	}
 
